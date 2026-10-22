@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block header %}
+<nav aria-label="Навігаційний ланцюжок">
+    <ol class="cv-breadcrumb">
+        <li><a href="{{ url_for('products.products_list') }}">Товари</a></li>
+        <li aria-current="page">{{ product.name }}</li>
+    </ol>
+</nav>
+<h1 class="cv-name">{{ product.name }}</h1>
+<p class="cv-position mb-0">Товар #{{ product.id }}</p>
+{% endblock %}
+
+{% block content %}
+<article class="cv-section product-detail">
+    <h2><i class="bi bi-info-circle-fill"></i> Опис</h2>
+    <p>{{ product.content }}</p>
+
+    <dl class="product-specs">
+        <div>
+            <dt>Ідентифікатор</dt>
+            <dd>{{ product.id }}</dd>
+        </div>
+        <div>
+            <dt>Ціна</dt>
+            <dd class="product-price">${{ product.price }}</dd>
+        </div>
+    </dl>
+
+    <a href="{{ url_for('products.products_list') }}" class="btn btn-outline-dark">
+        <i class="bi bi-arrow-left"></i> До списку товарів
+    </a>
+</article>
+{% endblock %}
