@@ -1,0 +1,281 @@
+:root {
+    --ink: #000000;
+    --text: #1a1a1a;
+    --muted: #555555;
+    --line: #e2e2e2;
+    --paper: #ffffff;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 72px;
+}
+
+body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: "Exo 2", "Segoe UI", system-ui, sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.5;
+}
+
+a {
+    color: inherit;
+}
+
+.cv-container {
+    max-width: 900px;
+}
+
+/* Навігація */
+.cv-nav {
+    background: var(--ink);
+    border-bottom: 1px solid #222;
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
+}
+
+.cv-nav .nav-link {
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+}
+
+.cv-nav .nav-link:hover,
+.cv-nav .nav-link:focus {
+    color: #fff;
+}
+
+.cv-nav .page-links .nav-link.active {
+    color: #fff;
+}
+
+@media (min-width: 768px) {
+    .cv-nav .section-links .nav-link {
+        padding-left: 0;
+        padding-right: 1.25rem;
+    }
+
+    .cv-nav .page-links .nav-link.active {
+        box-shadow: inset 0 -2px 0 #fff;
+    }
+}
+
+/* Чорна шапка в стилі CV */
+.cv-header {
+    background: var(--ink);
+    color: #fff;
+    padding: 2.25rem 0 2.5rem;
+}
+
+.cv-name {
+    font-size: 2.1rem;
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0;
+}
+
+.cv-position {
+    font-size: 1.35rem;
+    margin: 0.15rem 0 1.1rem;
+}
+
+.cv-photo {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #fff;
+    flex-shrink: 0;
+}
+
+/* Контакти з іконками */
+.contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.35rem 1.5rem;
+}
+
+.contact-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-width: 0;
+}
+
+.contact-list i {
+    width: 1.1rem;
+    text-align: center;
+}
+
+.contact-list a {
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+
+.contact-list a:hover {
+    text-decoration: underline;
+}
+
+.contacts-page .contact-list {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+    font-style: normal;
+}
+
+/* Секції */
+.cv-section {
+    margin-bottom: 1.75rem;
+}
+
+.cv-section h2 {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.7rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.cv-section h2 i {
+    font-size: 1.25rem;
+}
+
+.cv-entry {
+    margin-bottom: 0.9rem;
+}
+
+.cv-entry:last-child {
+    margin-bottom: 0;
+}
+
+.cv-entry-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+}
+
+.cv-meta {
+    white-space: nowrap;
+    color: var(--text);
+}
+
+.cv-stack {
+    color: var(--muted);
+}
+
+/* Списки з тире, як у CV */
+.dash-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.25rem 1.5rem;
+}
+
+.dash-list-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.dash-list-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.dash-list li {
+    position: relative;
+    padding-left: 1rem;
+}
+
+.dash-list li::before {
+    content: "-";
+    position: absolute;
+    left: 0;
+}
+
+/* Мови */
+.cv-languages {
+    display: flex;
+    gap: 4rem;
+    margin: 0;
+}
+
+.cv-languages dt {
+    font-weight: 700;
+}
+
+.cv-languages dd {
+    margin: 0;
+}
+
+/* Форма */
+.form-control {
+    border-radius: 0;
+    border-color: #bdbdbd;
+}
+
+.form-control:focus {
+    border-color: var(--ink);
+    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.12);
+}
+
+.btn-dark {
+    border-radius: 0;
+    background: var(--ink);
+}
+
+.cv-alert {
+    border: 1px solid var(--ink);
+    border-radius: 0;
+    background: #f4f4f4;
+}
+
+/* Мобільні екрани */
+@media (max-width: 767.98px) {
+    .cv-nav .navbar-collapse {
+        padding: 0.5rem 0;
+    }
+
+    .cv-nav .page-links {
+        border-top: 1px solid #333;
+        margin-top: 0.4rem;
+        padding-top: 0.4rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .cv-header {
+        padding: 1.75rem 0 2rem;
+        text-align: center;
+    }
+
+    .cv-name {
+        font-size: 1.8rem;
+    }
+
+    .contact-list {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+
+    .contacts-page .contact-list {
+        justify-items: start;
+    }
+
+    .dash-list-2,
+    .dash-list-3 {
+        grid-template-columns: 1fr;
+    }
+
+    .cv-entry-head {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .cv-languages {
+        gap: 2.5rem;
+    }
+}
