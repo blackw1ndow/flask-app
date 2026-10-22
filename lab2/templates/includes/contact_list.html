@@ -1,0 +1,12 @@
+<ul class="contact-list">
+    {% for c in profile.contacts %}
+    <li>
+        <i class="bi bi-{{ c.icon }}" aria-hidden="true"></i>
+        {% if c.url %}
+        <a href="{{ c.url }}" {% if c.url.startswith('http') %}target="_blank" rel="noopener"{% endif %}>{{ c.text }}</a>
+        {% else %}
+        <span>{{ c.text }}</span>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>

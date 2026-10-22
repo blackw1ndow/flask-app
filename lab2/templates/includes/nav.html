@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-md navbar-dark cv-nav sticky-top">
+    <div class="container cv-container">
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false" aria-label="Відкрити меню">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+            {% if sections %}
+            <ul class="navbar-nav section-links">
+                {% for anchor, label in sections %}
+                <li class="nav-item"><a class="nav-link" href="#{{ anchor }}">{{ label }}</a></li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <ul class="navbar-nav ms-auto page-links">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.endpoint == 'resume' %}active{% endif %}"
+                       href="{{ url_for('resume') }}">Резюме</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.endpoint == 'contacts' %}active{% endif %}"
+                       href="{{ url_for('contacts') }}">Контакти</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
