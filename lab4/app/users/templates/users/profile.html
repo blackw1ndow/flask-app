@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %}Профіль{% endblock %}
+
+{% block body_class %}theme-{{ theme }}{% endblock %}
+
+{% block body_attrs %}data-bs-theme="{{ theme }}"{% endblock %}
+
+{% block header %}
+<div class="profile-head">
+    <div>
+        <h1 class="cv-name"><i class="bi bi-person-circle"></i> Вітаємо, {{ username }}!</h1>
+        <p class="cv-position mb-0">Тут ви можете керувати кукі, змінити тему або вийти з системи.</p>
+    </div>
+    <form method="post" action="{{ url_for('users.logout') }}">
+        <button type="submit" class="btn btn-light">
+            <i class="bi bi-box-arrow-right"></i> Вийти
+        </button>
+    </form>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="cv-section" aria-labelledby="theme-heading">
+    <h2 id="theme-heading"><i class="bi bi-palette-fill"></i> Кольорова схема</h2>
+    <nav class="theme-switch" aria-label="Вибір теми">
+        <a href="{{ url_for('users.set_theme', scheme='light') }}"
+           class="theme-option {% if theme == 'light' %}active{% endif %}"
+           {% if theme == 'light' %}aria-current="true"{% endif %}>
+            <i class="bi bi-sun-fill"></i> Світла
+        </a>
+        <a href="{{ url_for('users.set_theme', scheme='dark') }}"
+           class="theme-option {% if theme == 'dark' %}active{% endif %}"
+           {% if theme == 'dark' %}aria-current="true"{% endif %}>
+            <i class="bi bi-moon-stars-fill"></i> Темна
+        </a>
+    </nav>
+</section>
+
+<section class="cv-section" aria-labelledby="add-cookie-heading">
+    <h2 id="add-cookie-heading"><i class="bi bi-plus-circle-fill"></i> Додати кукі</h2>
+    <form method="post" action="{{ url_for('users.add_cookie') }}" class="row g-3 align-items-end">
+        <div class="col-md-4">
+            <label for="cookie-key" class="form-label">Ключ</label>
+            <input type="text" class="form-control" id="cookie-key" name="key"
+                   pattern="[A-Za-z0-9_\-]+" placeholder="наприклад, lang" required>
+        </div>
+        <div class="col-md-4">
+            <label for="cookie-value" class="form-label">Значення</label>
+            <input type="text" class="form-control" id="cookie-value" name="value" placeholder="uk">
+        </div>
+        <div class="col-md-4">
+            <label for="cookie-age" class="form-label">Термін дії, с</label>
+            <input type="number" class="form-control" id="cookie-age" name="max_age" min="1" placeholder="3600">
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-dark"><i class="bi bi-plus-lg"></i> Додати кукі</button>
+        </div>
+    </form>
+</section>
+
+<section class="cv-section" aria-labelledby="delete-cookie-heading">
+    <h2 id="delete-cookie-heading"><i class="bi bi-dash-circle-fill"></i> Видалити кукі</h2>
+    <div class="row g-4">
+        <div class="col-md-8">
+            <form method="post" action="{{ url_for('users.delete_cookie') }}" class="row g-2 align-items-end">
+                <div class="col-sm-7">
+                    <label for="delete-key" class="form-label">За ключем</label>
+                    <input type="text" class="form-control" id="delete-key" name="key"
+                           list="cookie-keys" placeholder="ключ кукі" required>
+                    <datalist id="cookie-keys">
+                        {% for key, value in cookies if key != 'session' %}
+                        <option value="{{ key }}">
+                        {% endfor %}
+                    </datalist>
+                </div>
+                <div class="col-sm-5">
+                    <button type="submit" class="btn btn-outline-dark w-100">Видалити</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <p class="form-label mb-2">Усі одразу</p>
+            <form method="post" action="{{ url_for('users.clear_cookies') }}">
+                <button type="submit" class="btn btn-danger-cv w-100">
+                    <i class="bi bi-trash3-fill"></i> Видалити всі кукі
+                </button>
+            </form>
+        </div>
+    </div>
+    <p class="cv-note mt-2 mb-0">Кукі <code>session</code> не видаляється, бо в ній зберігається вхід.</p>
+</section>
+
+<section class="cv-section" aria-labelledby="cookies-heading">
+    <h2 id="cookies-heading"><i class="bi bi-table"></i> Поточні кукі</h2>
+    {% if cookies %}
+    <div class="table-responsive">
+        <table class="table cookie-table mb-0">
+            <thead>
+                <tr>
+                    <th scope="col">Ключ</th>
+                    <th scope="col">Значення</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, value in cookies %}
+                <tr>
+                    <td class="cookie-key">{{ key }}</td>
+                    <td class="cookie-value"><code>{{ value }}</code></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p class="mb-0">Кукі поки немає.</p>
+    {% endif %}
+</section>
+{% endblock %}
