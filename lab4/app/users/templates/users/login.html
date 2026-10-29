@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Вхід{% endblock %}
+
+{% block header %}
+<h1 class="cv-name">Вхід</h1>
+<p class="cv-position mb-0">Увійдіть, щоб перейти до профілю</p>
+{% endblock %}
+
+{% block content %}
+<section class="login-box" aria-labelledby="login-heading">
+    <h2 id="login-heading" class="visually-hidden">Форма входу</h2>
+    <form method="post" action="{{ url_for('users.login') }}" novalidate>
+        <div class="mb-3">
+            <label for="username" class="form-label">Ім'я користувача</label>
+            <input type="text" class="form-control" id="username" name="username"
+                   autocomplete="username" required autofocus>
+        </div>
+        <div class="mb-4">
+            <label for="password" class="form-label">Пароль</label>
+            <input type="password" class="form-control" id="password" name="password"
+                   autocomplete="current-password" required>
+        </div>
+        <button type="submit" class="btn btn-dark w-100">
+            <i class="bi bi-box-arrow-in-right"></i> Увійти
+        </button>
+    </form>
+</section>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% set nav_items = [
+    ('home', url_for('home'), 'Головна'),
+    ('resume', url_for('resume'), 'Резюме'),
+    ('contacts', url_for('contacts'), 'Контакти'),
+    ('users.greetings', url_for('users.greetings', name='John', age=30), 'Користувачі'),
+    ('products.', url_for('products.products_list'), 'Товари'),
+    ('users.profile', url_for('users.profile'), 'Профіль'),
+] %}
+{% set current = request.endpoint or '' %}
+
+<div class="cv-nav-wrap sticky-top">
+    <nav class="navbar navbar-expand-md navbar-dark cv-nav">
+        <div class="container cv-container">
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                    aria-controls="mainNav" aria-expanded="false" aria-label="Відкрити меню">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav page-links">
+                    {% for key, href, label in nav_items %}
+                    {% set is_active = current == key or (key.endswith('.') and current.startswith(key)) %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if is_active %}active{% endif %}"
+                           {% if is_active %}aria-current="page"{% endif %}
+                           href="{{ href }}">{{ label }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <ul class="navbar-nav ms-md-auto page-links">
+                    {% if session.get('username') %}
+                    <li class="nav-item">
+                        <span class="nav-user"><i class="bi bi-person-circle"></i> {{ session['username'] }}</span>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if current == 'users.login' %}active{% endif %}"
+                           href="{{ url_for('users.login') }}"><i class="bi bi-box-arrow-in-right"></i> Увійти</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {% if sections %}
+    <nav class="section-bar" aria-label="Розділи резюме">
+        <div class="container cv-container">
+            <ul class="section-links">
+                {% for anchor, label in sections %}
+                <li><a class="nav-link" href="#{{ anchor }}">{{ label }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </nav>
+    {% endif %}
+</div>
