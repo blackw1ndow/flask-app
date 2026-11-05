@@ -759,3 +759,32 @@ body.theme-dark {
         justify-content: center;
     }
 }
+
+.field-errors {
+    list-style: none;
+    margin: 0.35rem 0 0;
+    padding: 0;
+    color: #c0392b;
+    font-size: 0.9rem;
+}
+
+.field-errors li::before {
+    content: "\2715";
+    margin-right: 0.4rem;
+    font-size: 0.75rem;
+}
+
+.form-control.is-invalid,
+.form-select.is-invalid {
+    border-color: #c0392b;
+}
+
+.form-select {
+    border-radius: 0;
+    border-color: #bdbdbd;
+}
+
+.form-select:focus {
+    border-color: var(--ink);
+    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.12);
+}

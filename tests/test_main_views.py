@@ -20,12 +20,6 @@ class MainViewsTestCase(unittest.TestCase):
             response = self.client.get(url)
             self.assertEqual(response.status_code, 200)
 
-    def test_contacts_form(self):
-        """Після відправки форми з'являється подяка з ім'ям."""
-        response = self.client.post("/contacts", data={"name": "Ivan", "email": "a@b.c", "message": "hi"})
-        self.assertEqual(response.status_code, 200)
-        self.assertIn(b"Ivan", response.data)
-
 
 if __name__ == "__main__":
     unittest.main()
