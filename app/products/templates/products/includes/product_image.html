@@ -1,0 +1,8 @@
+{% if product.image %}
+<img src="{{ url_for('products.static', filename=product.image) }}" alt="{{ product.name }}" class="product-img">
+{% else %}
+<div class="product-img product-img-empty" role="img" aria-label="Фото відсутнє">
+    <i class="bi bi-image"></i>
+    <span>Немає фото</span>
+</div>
+{% endif %}

@@ -759,3 +759,172 @@ body.theme-dark {
         justify-content: center;
     }
 }
+
+/* ---------- Лабораторна 5 ---------- */
+
+/* Помилки під полем форми (макрос render_field) */
+.field-errors {
+    list-style: none;
+    margin: 0.35rem 0 0;
+    padding: 0;
+    color: #c0392b;
+    font-size: 0.9rem;
+}
+
+.field-errors li::before {
+    content: "\2715";
+    margin-right: 0.4rem;
+    font-size: 0.75rem;
+}
+
+.form-control.is-invalid,
+.form-select.is-invalid {
+    border-color: #c0392b;
+}
+
+.form-select {
+    border-radius: 0;
+    border-color: #bdbdbd;
+}
+
+.form-select:focus {
+    border-color: var(--ink);
+    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.12);
+}
+
+/* Товари з TinyDB: фото, категорія, кількість, дата */
+.product-card {
+    padding: 0;
+}
+
+.product-img-link {
+    display: block;
+    text-decoration: none;
+}
+
+.product-img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    background: #f4f4f4;
+    border-bottom: 1px solid var(--ink);
+}
+
+.product-detail .product-img {
+    border: 1px solid var(--ink);
+}
+
+.product-img-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    color: var(--muted);
+}
+
+.product-img-empty i {
+    font-size: 2.5rem;
+}
+
+.product-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 1.1rem 1.25rem 1.25rem;
+}
+
+.product-category {
+    align-self: flex-start;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-bottom: 0.2rem;
+}
+
+.product-meta {
+    display: flex;
+    gap: 1.5rem;
+    margin: 0 0 1rem;
+    flex-grow: 1;
+    font-size: 0.92rem;
+}
+
+.product-meta dt {
+    font-weight: 400;
+    color: var(--muted);
+}
+
+.product-meta dd {
+    margin: 0;
+    font-weight: 600;
+}
+
+.product-description {
+    white-space: pre-line;
+}
+
+.product-specs {
+    flex-wrap: wrap;
+    gap: 1rem 2.5rem;
+}
+
+/* Форма товару */
+.section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 0.7rem;
+}
+
+.section-head h2 {
+    margin-bottom: 0 !important;
+}
+
+.product-form {
+    max-width: 680px;
+}
+
+.product-form textarea {
+    resize: vertical;
+}
+
+.field-hint {
+    margin: -0.6rem 0 1.25rem;
+}
+
+/* Редагування: поточне фото */
+.current-image {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.current-image img {
+    width: 96px;
+    height: 72px;
+    object-fit: cover;
+    border: 1px solid var(--ink);
+}
+
+.form-check-input {
+    border-radius: 0;
+    border-color: var(--ink);
+}
+
+.form-check-input:checked {
+    background-color: var(--ink);
+    border-color: var(--ink);
+}
+
+/* Вікно підтвердження видалення */
+.cv-modal {
+    border-radius: 0;
+    border: 1px solid var(--ink);
+}

@@ -1,6 +1,11 @@
-from flask import render_template, request
+import logging
+
+from flask import flash, redirect, render_template, request, url_for
 
 from . import app
+from .forms import SUBJECTS, ContactForm
+
+contact_logger = logging.getLogger("contacts")
 
 PROFILE = {
     "name": "Анатолій Кульчицький",
@@ -122,7 +127,22 @@ def home():
 
 @app.route("/contacts", methods=["GET", "POST"])
 def contacts():
-    sent_name = None
+    form = ContactForm()
+
+    if form.validate_on_submit():
+        subject = dict(SUBJECTS).get(form.subject.data, form.subject.data)
+        contact_logger.info(
+            "name=%s | email=%s | phone=%s | subject=%s | message=%s",
+            form.name.data,
+            form.email.data,
+            form.phone.data,
+            subject,
+            form.message.data.replace("\n", " "),
+        )
+        flash(f"Дякую, {form.name.data}! Повідомлення надіслано й записано.", "success")
+        return redirect(url_for("contacts"))
+
     if request.method == "POST":
-        sent_name = request.form.get("name", "").strip() or "друже"
-    return render_template("contacts.html", title="Контакти", sent_name=sent_name)
+        flash("Повідомлення не надіслано: виправте помилки у формі.", "danger")
+
+    return render_template("contacts.html", title="Контакти", form=form)
