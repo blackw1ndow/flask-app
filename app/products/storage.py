@@ -94,3 +94,15 @@ def add_product(data):
         product_id = next_id(db)
         db.table(TABLE_NAME).insert(Document({**data, "created_at": now()}, doc_id=product_id))
         return product_id
+
+
+def update_product(product_id, data):
+    """Оновлює поля товару. id і created_at не змінюються."""
+    data = {k: v for k, v in data.items() if k not in ("id", "created_at")}
+    with open_db() as db:
+        db.table(TABLE_NAME).update(data, doc_ids=[product_id])
+
+
+def delete_product(product_id):
+    with open_db() as db:
+        db.table(TABLE_NAME).remove(doc_ids=[product_id])

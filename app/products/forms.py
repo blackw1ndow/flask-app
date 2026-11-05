@@ -2,7 +2,7 @@ from decimal import Decimal, InvalidOperation
 
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed, FileField, FileSize
-from wtforms import DecimalField, IntegerField, SelectField, StringField, SubmitField, TextAreaField
+from wtforms import BooleanField, DecimalField, IntegerField, SelectField, StringField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, InputRequired, Length, ValidationError
 from wtforms.widgets import TextInput
 
@@ -97,3 +97,13 @@ class ProductForm(FlaskForm):
         render_kw={"accept": ".png,.jpg,.jpeg"},
     )
     submit = SubmitField("Зберегти")
+
+
+class EditProductForm(ProductForm):
+    remove_image = BooleanField("Видалити поточне фото")
+    submit = SubmitField("Зберегти зміни")
+
+
+class DeleteForm(FlaskForm):
+    """Порожня форма: потрібна лише для CSRF-токена при видаленні."""
+    submit = SubmitField("Видалити")

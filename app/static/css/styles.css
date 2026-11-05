@@ -897,3 +897,34 @@ body.theme-dark {
 .field-hint {
     margin: -0.6rem 0 1.25rem;
 }
+
+/* Редагування: поточне фото */
+.current-image {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.current-image img {
+    width: 96px;
+    height: 72px;
+    object-fit: cover;
+    border: 1px solid var(--ink);
+}
+
+.form-check-input {
+    border-radius: 0;
+    border-color: var(--ink);
+}
+
+.form-check-input:checked {
+    background-color: var(--ink);
+    border-color: var(--ink);
+}
+
+/* Вікно підтвердження видалення */
+.cv-modal {
+    border-radius: 0;
+    border: 1px solid var(--ink);
+}

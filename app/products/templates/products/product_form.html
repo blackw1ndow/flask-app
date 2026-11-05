@@ -30,7 +30,15 @@
             <div class="col-sm-4">{{ render_field(form.category) }}</div>
         </div>
 
-        {% block image_extra %}{% endblock %}
+        {% if product and product.image %}
+        <div class="current-image">
+            <img src="{{ url_for('products.static', filename=product.image) }}" alt="Поточне фото {{ product.name }}">
+            <div class="form-check">
+                {{ form.remove_image(class_='form-check-input') }}
+                {{ form.remove_image.label(class_='form-check-label') }}
+            </div>
+        </div>
+        {% endif %}
         {{ render_field(form.image) }}
         <p class="cv-note field-hint">PNG, JPG або JPEG, до 2 МБ.{% if product %} Залиште поле порожнім, щоб не змінювати фото.{% endif %}</p>
 
