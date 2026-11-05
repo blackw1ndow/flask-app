@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% from '_render_field.html' import render_field %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block header %}
+<nav aria-label="Навігаційний ланцюжок">
+    <ol class="cv-breadcrumb">
+        <li><a href="{{ url_for('products.products_list') }}">Товари</a></li>
+        {% if product %}
+        <li><a href="{{ url_for('products.detail_product', id=product.id) }}">{{ product.name }}</a></li>
+        {% endif %}
+        <li aria-current="page">{{ title }}</li>
+    </ol>
+</nav>
+<h1 class="cv-name">{{ title }}</h1>
+{% endblock %}
+
+{% block content %}
+<section class="cv-section product-form">
+    <form method="post" enctype="multipart/form-data" novalidate>
+        {{ form.hidden_tag() }}
+
+        {{ render_field(form.name, placeholder="Наприклад, Gaming Mouse") }}
+        {{ render_field(form.content) }}
+
+        <div class="row gx-3">
+            <div class="col-sm-4">{{ render_field(form.price) }}</div>
+            <div class="col-sm-4">{{ render_field(form.quantity) }}</div>
+            <div class="col-sm-4">{{ render_field(form.category) }}</div>
+        </div>
+
+        {% block image_extra %}{% endblock %}
+        {{ render_field(form.image) }}
+        <p class="cv-note field-hint">PNG, JPG або JPEG, до 2 МБ.{% if product %} Залиште поле порожнім, щоб не змінювати фото.{% endif %}</p>
+
+        <div class="d-flex flex-wrap gap-2">
+            <button type="submit" class="btn btn-dark px-4">
+                <i class="bi bi-check-lg"></i> {{ form.submit.label.text }}
+            </button>
+            <a href="{{ url_for('products.detail_product', id=product.id) if product else url_for('products.products_list') }}"
+               class="btn btn-outline-dark">Скасувати</a>
+        </div>
+    </form>
+</section>
+{% endblock %}

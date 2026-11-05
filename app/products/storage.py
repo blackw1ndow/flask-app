@@ -3,8 +3,10 @@ from datetime import datetime
 
 from flask import current_app
 from tinydb import TinyDB
+from tinydb.table import Document
 
 TABLE_NAME = "products"
+META_TABLE = "meta"  # тут зберігається останній виданий id
 
 CATEGORIES = [
     ("laptops", "Ноутбуки"),
@@ -74,3 +76,21 @@ def get_product(product_id):
     with open_db() as db:
         doc = db.table(TABLE_NAME).get(doc_id=product_id)
         return to_product(doc) if doc else None
+
+
+def next_id(db):
+    """Новий id, який ніколи не повторюється, навіть після видалення останнього товару."""
+    meta = db.table(META_TABLE)
+    record = meta.get(doc_id=1) or {"last_id": 0}
+    existing = [doc.doc_id for doc in db.table(TABLE_NAME).all()]
+    new_id = max([record["last_id"], *existing]) + 1
+    meta.upsert(Document({"last_id": new_id}, doc_id=1))
+    return new_id
+
+
+def add_product(data):
+    """Додає товар з автоматичними id і created_at, повертає id."""
+    with open_db() as db:
+        product_id = next_id(db)
+        db.table(TABLE_NAME).insert(Document({**data, "created_at": now()}, doc_id=product_id))
+        return product_id

@@ -1,5 +1,5 @@
 {% macro render_field(field) %}
-{% set field_class = 'form-select' if field.type == 'SelectField' else 'form-control' %}
+{% set field_class = 'form-select' if field.type.endswith('SelectField') else 'form-control' %}
 <div class="mb-3">
     {{ field.label(class_='form-label') }}
     {% if field.errors %}

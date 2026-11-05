@@ -4,7 +4,12 @@
 
 {% block content %}
 <section class="cv-section" aria-labelledby="products-heading">
-    <h2 id="products-heading"><i class="bi bi-bag-fill"></i> Список товарів</h2>
+    <div class="section-head">
+        <h2 id="products-heading"><i class="bi bi-bag-fill"></i> Список товарів</h2>
+        <a href="{{ url_for('products.add_product_view') }}" class="btn btn-dark">
+            <i class="bi bi-plus-lg"></i> Додати товар
+        </a>
+    </div>
 
     {% if products %}
     <div class="row g-3">
