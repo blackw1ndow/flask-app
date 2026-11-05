@@ -5,21 +5,35 @@
 {% block content %}
 <section class="cv-section" aria-labelledby="products-heading">
     <h2 id="products-heading"><i class="bi bi-bag-fill"></i> Список товарів</h2>
+
+    {% if products %}
     <div class="row g-3">
         {% for product in products %}
-        <div class="col-md-4">
+        <div class="col-sm-6 col-lg-4">
             <article class="product-card h-100">
-                <h3>{{ product.name }}</h3>
-                <p class="product-content">{{ product.content }}</p>
-                <div class="product-footer">
-                    <span class="product-price">${{ product.price }}</span>
-                    <a href="{{ url_for('products.detail_product', id=product.id) }}" class="btn btn-dark btn-sm">
-                        Детальніше <i class="bi bi-arrow-right"></i>
-                    </a>
+                <a href="{{ url_for('products.detail_product', id=product.id) }}" class="product-img-link">
+                    {% include 'products/includes/product_image.html' %}
+                </a>
+                <div class="product-body">
+                    <span class="product-category">{{ categories.get(product.category, product.category) }}</span>
+                    <h3>{{ product.name }}</h3>
+                    <dl class="product-meta">
+                        <div><dt>Кількість</dt><dd>{{ product.quantity }} шт.</dd></div>
+                        <div><dt>Додано</dt><dd>{{ product.created_at | datetime }}</dd></div>
+                    </dl>
+                    <div class="product-footer">
+                        <span class="product-price">${{ '%.2f' | format(product.price) }}</span>
+                        <a href="{{ url_for('products.detail_product', id=product.id) }}" class="btn btn-dark btn-sm">
+                            Детальніше <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
                 </div>
             </article>
         </div>
         {% endfor %}
     </div>
+    {% else %}
+    <p class="mb-0">Товарів поки немає.</p>
+    {% endif %}
 </section>
 {% endblock %}

@@ -1,0 +1,31 @@
+{
+  "products": {
+    "1": {
+      "name": "Laptop",
+      "content": "Потужний ноутбук з процесором Intel Core i7, 16 ГБ оперативної пам'яті та SSD на 512 ГБ.",
+      "price": 1200.0,
+      "category": "laptops",
+      "quantity": 5,
+      "image": null,
+      "created_at": "2026-11-05T14:36:08"
+    },
+    "2": {
+      "name": "Phone",
+      "content": "Смартфон із 6.5-дюймовим OLED-дисплеєм, подвійною камерою та акумулятором на 5000 мА·год.",
+      "price": 800.0,
+      "category": "phones",
+      "quantity": 12,
+      "image": null,
+      "created_at": "2026-11-05T14:36:08"
+    },
+    "3": {
+      "name": "PC",
+      "content": "Настільний комп'ютер для ігор або роботи з графікою: RTX 4070, 32 ГБ RAM, 1 ТБ SSD.",
+      "price": 1800.0,
+      "category": "computers",
+      "quantity": 3,
+      "image": null,
+      "created_at": "2026-11-05T14:36:08"
+    }
+  }
+}
