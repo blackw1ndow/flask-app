@@ -1,11 +1,10 @@
 import io
 import os
-import re
 import shutil
 import tempfile
 import unittest
 
-from app import app
+from app import create_app
 from app.products.storage import TABLE_NAME, init_storage, open_db
 
 VALID = {
@@ -26,18 +25,15 @@ class ProductsCrudTestCase(unittest.TestCase):
 
     def setUp(self):
         self.tmp_dir = tempfile.mkdtemp()
-        self.old_config = {k: app.config[k] for k in ("PRODUCTS_DB", "PRODUCT_UPLOAD_FOLDER")}
-        app.config.update(
-            TESTING=True,
-            WTF_CSRF_ENABLED=False,
+        self.app = create_app("testing")
+        self.app.config.update(
             PRODUCTS_DB=os.path.join(self.tmp_dir, "products.json"),
             PRODUCT_UPLOAD_FOLDER=os.path.join(self.tmp_dir, "uploads"),
         )
-        init_storage(app.config["PRODUCTS_DB"])  # 3 стартові товари з id 1, 2, 3
-        self.client = app.test_client()
+        init_storage(self.app.config["PRODUCTS_DB"])  # 3 стартові товари з id 1, 2, 3
+        self.client = self.app.test_client()
 
     def tearDown(self):
-        app.config.update(self.old_config, WTF_CSRF_ENABLED=True)
         shutil.rmtree(self.tmp_dir)
 
     # ---------- допоміжні ----------
@@ -46,15 +42,15 @@ class ProductsCrudTestCase(unittest.TestCase):
         return self.client.post(url, data=data, content_type="multipart/form-data")
 
     def product(self, product_id):
-        with app.app_context(), open_db() as db:
+        with self.app.app_context(), open_db() as db:
             return db.table(TABLE_NAME).get(doc_id=product_id)
 
     def count(self):
-        with app.app_context(), open_db() as db:
+        with self.app.app_context(), open_db() as db:
             return len(db.table(TABLE_NAME))
 
     def uploads(self):
-        folder = app.config["PRODUCT_UPLOAD_FOLDER"]
+        folder = self.app.config["PRODUCT_UPLOAD_FOLDER"]
         return os.listdir(folder) if os.path.isdir(folder) else []
 
     # ---------- Create ----------
@@ -216,7 +212,7 @@ class ProductsCrudTestCase(unittest.TestCase):
         self.assertIn("Видалити товар?", text)
 
     def test_delete_without_csrf_token_is_rejected(self):
-        app.config["WTF_CSRF_ENABLED"] = True
+        self.app.config["WTF_CSRF_ENABLED"] = True
         self.client.post("/product/1/delete")
         self.assertIsNotNone(self.product(1))
 

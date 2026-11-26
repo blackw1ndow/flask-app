@@ -1,15 +1,14 @@
 import unittest
 import uuid
 
-from app import app
+from app import create_app
 
 
 class ContactFormTestCase(unittest.TestCase):
 
     def setUp(self):
-        app.config["TESTING"] = True
-        app.config["WTF_CSRF_ENABLED"] = False
-        self.client = app.test_client()
+        self.app = create_app("testing")  # у TestingConfig CSRF вимкнено
+        self.client = self.app.test_client()
         self.valid = {
             "name": "Ivan",
             "email": "ivan@example.com",
@@ -17,9 +16,6 @@ class ContactFormTestCase(unittest.TestCase):
             "subject": "question",
             "message": "Привіт! Тестове повідомлення.",
         }
-
-    def tearDown(self):
-        app.config["WTF_CSRF_ENABLED"] = True
 
     def test_form_renders_fields(self):
         response = self.client.get("/contacts")
@@ -36,7 +32,7 @@ class ContactFormTestCase(unittest.TestCase):
     def test_valid_form_is_logged(self):
         marker = "msg-" + uuid.uuid4().hex[:8]
         self.client.post("/contacts", data={**self.valid, "message": marker})
-        with open(app.config["CONTACT_LOG_FILE"], encoding="utf-8") as log:
+        with open(self.app.config["CONTACT_LOG_FILE"], encoding="utf-8") as log:
             self.assertIn(marker, log.read())
 
     def test_invalid_form_shows_errors(self):
@@ -55,7 +51,7 @@ class ContactFormTestCase(unittest.TestCase):
         self.assertIn("не може бути довшим за 500".encode(), response.data)
 
     def test_csrf_protection(self):
-        app.config["WTF_CSRF_ENABLED"] = True
+        self.app.config["WTF_CSRF_ENABLED"] = True
         response = self.client.post("/contacts", data=self.valid)
         self.assertEqual(response.status_code, 200)
         self.assertIn("Повідомлення не надіслано".encode(), response.data)

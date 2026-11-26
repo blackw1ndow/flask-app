@@ -1,13 +1,14 @@
 import unittest
-from app import app  # Переконайтеся, що імпортували ваш Flask-додаток
+
+from app import create_app
 
 
 class FlaskAppTestCase(unittest.TestCase):
 
     def setUp(self):
         """Налаштування клієнта тестування перед кожним тестом."""
-        app.config["TESTING"] = True
-        self.client = app.test_client()
+        self.app = create_app("testing")
+        self.client = self.app.test_client()
 
     def test_greetings_page(self):
         """Тест маршруту /users/hi/<name>."""

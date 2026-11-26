@@ -3,7 +3,7 @@ import shutil
 import tempfile
 import unittest
 
-from app import app
+from app import create_app
 from app.products.storage import TABLE_NAME, init_storage, open_db
 
 
@@ -12,19 +12,17 @@ class ProductsReadTestCase(unittest.TestCase):
 
     def setUp(self):
         self.tmp_dir = tempfile.mkdtemp()
-        self.old_db = app.config["PRODUCTS_DB"]
-        app.config["PRODUCTS_DB"] = os.path.join(self.tmp_dir, "products.json")
-        init_storage(app.config["PRODUCTS_DB"])  # нова база зі стартовими товарами
-        app.config["TESTING"] = True
-        self.client = app.test_client()
+        self.app = create_app("testing")
+        self.app.config["PRODUCTS_DB"] = os.path.join(self.tmp_dir, "products.json")
+        init_storage(self.app.config["PRODUCTS_DB"])  # нова база зі стартовими товарами
+        self.client = self.app.test_client()
 
     def tearDown(self):
-        app.config["PRODUCTS_DB"] = self.old_db
         shutil.rmtree(self.tmp_dir)
 
     def test_storage_is_created(self):
-        self.assertTrue(os.path.exists(app.config["PRODUCTS_DB"]))
-        with app.app_context(), open_db() as db:
+        self.assertTrue(os.path.exists(self.app.config["PRODUCTS_DB"]))
+        with self.app.app_context(), open_db() as db:
             self.assertEqual(len(db.table(TABLE_NAME)), 3)
 
     def test_products_list(self):
@@ -54,9 +52,9 @@ class ProductsReadTestCase(unittest.TestCase):
 
     def test_data_persists_between_runs(self):
         """Повторна ініціалізація не перезаписує вже наявні дані."""
-        with app.app_context(), open_db() as db:
+        with self.app.app_context(), open_db() as db:
             db.table(TABLE_NAME).remove(doc_ids=[1])
-        init_storage(app.config["PRODUCTS_DB"])
+        init_storage(self.app.config["PRODUCTS_DB"])
         response = self.client.get("/product/1")
         self.assertEqual(response.status_code, 404)
 

@@ -1,9 +1,10 @@
 import logging
 
-from flask import flash, redirect, render_template, request, url_for
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 
-from . import app
 from .forms import SUBJECTS, ContactForm
+
+main_bp = Blueprint("main", __name__)
 
 contact_logger = logging.getLogger("contacts")
 
@@ -84,13 +85,14 @@ SECTIONS = [
 ]
 
 
-@app.context_processor
+@main_bp.app_context_processor
 def inject_profile():
+    """profile потрібен у base.html на всіх сторінках, тому передаємо його глобально."""
     return {"profile": PROFILE}
 
 
-@app.route("/")
-@app.route("/resume")
+@main_bp.route("/")
+@main_bp.route("/resume")
 def resume():
     return render_template(
         "resume.html",
@@ -111,7 +113,7 @@ def describe_agent(agent_string):
     return browser, system
 
 
-@app.route("/homepage")
+@main_bp.route("/homepage")
 def home():
     """View for the Home page of your website."""
     agent = request.user_agent
@@ -125,7 +127,7 @@ def home():
     )
 
 
-@app.route("/contacts", methods=["GET", "POST"])
+@main_bp.route("/contacts", methods=["GET", "POST"])
 def contacts():
     form = ContactForm()
 
@@ -140,7 +142,7 @@ def contacts():
             form.message.data.replace("\n", " "),
         )
         flash(f"Дякую, {form.name.data}! Повідомлення надіслано й записано.", "success")
-        return redirect(url_for("contacts"))
+        return redirect(url_for("main.contacts"))
 
     if request.method == "POST":
         flash("Повідомлення не надіслано: виправте помилки у формі.", "danger")

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Сторінку не знайдено{% endblock %}
+
+{% block header %}
+<p class="cv-kicker mb-1">Помилка 404</p>
+<h1 class="cv-name">Сторінку не знайдено</h1>
+{% endblock %}
+
+{% block content %}
+<section class="cv-section not-found">
+    <p class="not-found-code" aria-hidden="true">404</p>
+    <h2>Oops! Page Not Found</h2>
+    <p>Сторінки за адресою <code>{{ request.path }}</code> не існує або її було видалено.</p>
+    <a href="{{ url_for('main.home') }}" class="btn btn-dark">
+        <i class="bi bi-house-fill"></i> На головну
+    </a>
+</section>
+{% endblock %}

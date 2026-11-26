@@ -239,7 +239,6 @@ a {
     .cv-nav .navbar-collapse {
         padding: 0.5rem 0;
     }
-
 }
 
 @media (max-width: 575.98px) {
@@ -927,4 +926,24 @@ body.theme-dark {
 .cv-modal {
     border-radius: 0;
     border: 1px solid var(--ink);
+}
+
+/* ---------- Лабораторна 6 ---------- */
+
+/* Сторінка 404 */
+.not-found {
+    text-align: center;
+    padding: 1.5rem 0 1rem;
+}
+
+.not-found h2 {
+    justify-content: center;
+}
+
+.not-found-code {
+    font-size: 6rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    color: #c0392b;
 }

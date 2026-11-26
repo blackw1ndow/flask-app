@@ -22,7 +22,9 @@ def format_datetime(value):
     """2026-11-05T14:30:00 -> 05.11.2026 14:30"""
     if not value:
         return "—"
-    return datetime.fromisoformat(value).strftime("%d.%m.%Y %H:%M")
+    if isinstance(value, str):
+        value = datetime.fromisoformat(value)
+    return value.strftime("%d.%m.%Y %H:%M")
 
 
 from . import views

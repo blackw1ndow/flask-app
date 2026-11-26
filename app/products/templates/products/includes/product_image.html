@@ -1,3 +1,4 @@
+{# Фото товару або заглушка, якщо фото немає #}
 {% if product.image %}
 <img src="{{ url_for('products.static', filename=product.image) }}" alt="{{ product.name }}" class="product-img">
 {% else %}

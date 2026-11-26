@@ -1,7 +1,7 @@
 {% set nav_items = [
-    ('home', url_for('home'), 'Головна'),
-    ('resume', url_for('resume'), 'Резюме'),
-    ('contacts', url_for('contacts'), 'Контакти'),
+    ('main.home', url_for('main.home'), 'Головна'),
+    ('main.resume', url_for('main.resume'), 'Резюме'),
+    ('main.contacts', url_for('main.contacts'), 'Контакти'),
     ('users.greetings', url_for('users.greetings', name='John', age=30), 'Користувачі'),
     ('products.', url_for('products.products_list'), 'Товари'),
     ('users.profile', url_for('users.profile'), 'Профіль'),

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% from '_render_field.html' import render_field %}
+{% from 'macros/form_macros.html' import render_field %}
 
 {% block header %}
 <h1 class="cv-name">{{ title }}</h1>
@@ -18,7 +18,7 @@
     <section class="col-md-7 cv-section" aria-labelledby="form-heading">
         <h2 id="form-heading"><i class="bi bi-chat-left-text-fill"></i> Надіслати повідомлення</h2>
 
-        <form method="post" action="{{ url_for('contacts') }}" novalidate>
+        <form method="post" action="{{ url_for('main.contacts') }}" novalidate>
             {{ form.hidden_tag() }}
             <div class="row gx-3">
                 <div class="col-sm-6">{{ render_field(form.name, placeholder="Іван") }}</div>
