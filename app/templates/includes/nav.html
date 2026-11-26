@@ -4,6 +4,7 @@
     ('main.contacts', url_for('main.contacts'), 'Контакти'),
     ('users.greetings', url_for('users.greetings', name='John', age=30), 'Користувачі'),
     ('products.', url_for('products.products_list'), 'Товари'),
+    ('posts.', url_for('posts.list_posts'), 'Пости'),
     ('users.profile', url_for('users.profile'), 'Профіль'),
 ] %}
 {% set current = request.endpoint or '' %}

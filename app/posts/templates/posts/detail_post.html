@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('.static', filename='css/posts.css') }}">
+{% endblock %}
+
+{% block header %}
+<nav aria-label="Навігаційний ланцюжок">
+    <ol class="cv-breadcrumb">
+        <li><a href="{{ url_for('.list_posts') }}">Пости</a></li>
+        <li aria-current="page">{{ post.title }}</li>
+    </ol>
+</nav>
+<h1 class="cv-name">{{ post.title }}</h1>
+{% endblock %}
+
+{% block content %}
+<article class="cv-section post-detail">
+    <dl class="post-meta">
+        <div><dt>Автор</dt><dd><i class="bi bi-person-fill"></i> {{ post.author }}</dd></div>
+        <div><dt>Дата</dt><dd>{{ post.posted | datetime }}</dd></div>
+        <div><dt>Категорія</dt><dd><span class="post-badge post-badge-{{ post.category }}">{{ post_categories.get(post.category, post.category) }}</span></dd></div>
+        {% if not post.is_active %}
+        <div><dt>Статус</dt><dd><span class="post-badge post-badge-hidden">Неактивний</span></dd></div>
+        {% endif %}
+    </dl>
+
+    <div class="post-content">{{ post.content }}</div>
+
+    <div class="d-flex flex-wrap gap-2">
+        <a href="{{ url_for('.update_post', id=post.id) }}" class="btn btn-dark">
+            <i class="bi bi-pencil-fill"></i> Edit
+        </a>
+        <a href="{{ url_for('.delete_post', id=post.id) }}" class="btn btn-danger-cv">
+            <i class="bi bi-trash3-fill"></i> Delete
+        </a>
+        <a href="{{ url_for('.list_posts') }}" class="btn btn-outline-dark">
+            <i class="bi bi-arrow-left"></i> До списку
+        </a>
+    </div>
+</article>
+{% endblock %}

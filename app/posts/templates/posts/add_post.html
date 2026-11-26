@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% from 'macros/form_macros.html' import render_field %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('.static', filename='css/posts.css') }}">
+{% endblock %}
+
+{% block header %}
+<nav aria-label="Навігаційний ланцюжок">
+    <ol class="cv-breadcrumb">
+        <li><a href="{{ url_for('.list_posts') }}">Пости</a></li>
+        {% if post %}
+        <li><a href="{{ url_for('.detail_post', id=post.id) }}">{{ post.title }}</a></li>
+        {% endif %}
+        <li aria-current="page">{{ title }}</li>
+    </ol>
+</nav>
+<h1 class="cv-name">{{ title }}</h1>
+{% endblock %}
+
+{% block content %}
+<section class="cv-section post-form">
+    <form method="post" novalidate>
+        {{ form.hidden_tag() }}
+
+        {{ render_field(form.title, placeholder="Про що пост?") }}
+        {{ render_field(form.content) }}
+
+        <div class="row gx-3">
+            <div class="col-sm-6">{{ render_field(form.publish_date) }}</div>
+            <div class="col-sm-6">{{ render_field(form.category) }}</div>
+        </div>
+
+        <div class="form-check mb-4">
+            {{ form.is_active(class_='form-check-input') }}
+            {{ form.is_active.label(class_='form-check-label') }}
+        </div>
+
+        <div class="d-flex flex-wrap gap-2">
+            <button type="submit" class="btn btn-dark px-4">
+                <i class="bi bi-check-lg"></i> {{ form.submit.label.text }}
+            </button>
+            <a href="{{ url_for('.detail_post', id=post.id) if post else url_for('.list_posts') }}"
+               class="btn btn-outline-dark">Скасувати</a>
+        </div>
+    </form>
+</section>
+{% endblock %}
